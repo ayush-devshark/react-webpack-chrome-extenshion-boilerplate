@@ -5,7 +5,10 @@ const HTMLPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
     devtool: 'cheap-module-source-map',
-    entry: { popup: path.resolve('src/popup/popup.tsx') },
+    entry: {
+        popup: path.resolve('src/popup/popup.tsx'),
+        options: path.resolve('src/options/options.tsx'),
+    },
     module: {
         rules: [{ use: 'ts-loader', test: /\.tsx?$/, exclude: /node_modules/ }],
     },
@@ -14,19 +17,26 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: path.resolve('src/manifest.json'),
+                    from: path.resolve('src/static'),
                     to: path.resolve('dist'),
                 },
             ],
         }),
-        new HTMLPlugin({
-            title: 'React Extension',
-            filename: 'popup.html',
-            chunk: ['popup'],
-        }),
+        ...getHTMLPLugins(['popup', 'options']),
     ],
     output: {
         filename: '[name].js',
         path: path.resolve('dist'),
     },
 };
+
+function getHTMLPLugins(chunksArray) {
+    return chunksArray.map(
+        chunk =>
+            new HTMLPlugin({
+                title: 'React Extension',
+                filename: `${chunk}.html`,
+                chunks: [chunk],
+            })
+    );
+}
