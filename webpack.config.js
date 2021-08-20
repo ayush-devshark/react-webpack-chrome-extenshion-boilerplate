@@ -4,6 +4,7 @@ const HTMLPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    devtool: 'cheap-module-source-map',
     entry: { popup: path.resolve('src/popup/popup.tsx') },
     module: {
         rules: [{ use: 'ts-loader', test: /\.tsx?$/, exclude: /node_modules/ }],
