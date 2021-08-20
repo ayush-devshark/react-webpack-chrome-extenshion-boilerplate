@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './popup.css';
 
 const Test = () => {
-    return <div>Hello World</div>;
+    return <img src='icon.png' alt='' />;
 };
 
 const root = document.createElement('div');

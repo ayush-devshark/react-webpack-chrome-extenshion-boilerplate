@@ -10,7 +10,11 @@ module.exports = {
         options: path.resolve('src/options/options.tsx'),
     },
     module: {
-        rules: [{ use: 'ts-loader', test: /\.tsx?$/, exclude: /node_modules/ }],
+        rules: [
+            { use: 'ts-loader', test: /\.tsx?$/, exclude: /node_modules/ },
+            { use: ['style-loader', 'css-loader'], test: /\.css$/i },
+            { type: 'asset/resource', test: /\.(jpg|png|woff|eot|ttf|svg)$/ },
+        ],
     },
     resolve: { extensions: ['.tsx', '.ts', '.js'] },
     plugins: [
@@ -27,6 +31,11 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.resolve('dist'),
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
     },
 };
 
